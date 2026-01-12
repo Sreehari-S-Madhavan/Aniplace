@@ -15,7 +15,10 @@
  */
 
 // Base URL for API (will be different in production)
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// Base URL for API
+const envUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// Ensure we don't end up with double /api if env var has it
+const API_BASE_URL = envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`
 
 /**
  * Helper function to make API requests
