@@ -52,8 +52,8 @@ app.use(express.urlencoded({ extended: true }))
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
+  res.json({
+    status: 'ok',
     message: 'AniHub API is running',
     timestamp: new Date().toISOString()
   })
@@ -68,9 +68,9 @@ app.use('/api/platforms', platformRoutes)
 
 // 404 handler - if route doesn't exist
 app.use((req, res) => {
-  res.status(404).json({ 
+  res.status(404).json({
     error: 'Route not found',
-    path: req.path 
+    path: req.path
   })
 })
 
@@ -83,8 +83,12 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`)
-  console.log(`📍 Health check: http://localhost:${PORT}/api/health`)
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`)
-})
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`)
+    console.log(`📍 Health check: http://localhost:${PORT}/api/health`)
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`)
+  })
+}
+
+module.exports = app

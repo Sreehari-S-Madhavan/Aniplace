@@ -86,3 +86,37 @@ Since you need to create the tables in the cloud DB:
 -   **Frontend**: React app that talks to Backend URL.
 
 You are now live! 🚀
+
+---
+
+# Alternative: Deploy on Vercel
+
+If you prefer **Vercel**, you can deploy both Client and Server there.
+
+### 1. Database (Neon or Vercel Postgres)
+Vercel doesn't host "persistent" servers but works great with serverless databases.
+1.  Create a Project on **Neon.tech** or **Supabase**.
+2.  Get your **Postgres Connection String**.
+
+### 2. Deploy Backend (Serverless)
+1.  Go to Vercel Dashboard -> **Add New Project**.
+2.  Import your AniHub repo.
+3.  **Root Directory**: Click "Edit" and select `server`.
+4.  **Environment Variables**: Add your DB credentials (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `JWT_SECRET`).
+    *   Also add `FRONTEND_URL` (the url of your client, you might need to deploy client first or guess it: `https://anihub-client.vercel.app`).
+5.  Click **Deploy**.
+6.  You will get a backend URL (e.g., `https://anihub-server.vercel.app`).
+
+### 3. Deploy Frontend
+1.  Go to Vercel Dashboard -> **Add New Project**.
+2.  Import your AniHub repo (Again).
+3.  **Root Directory**: Click "Edit" and select `client`.
+4.  **Framework Preset**: Select **Vite**.
+5.  **Environment Variables**:
+    -   `VITE_API_URL`: Your backend URL + `/api` (e.g., `https://anihub-server.vercel.app/api`).
+6.  Click **Deploy**.
+
+### 4. Connect Them
+1.  Go back to Backend settings on Vercel.
+2.  Update `FRONTEND_URL` var to the actual deployed Client URL if you guessed wrong.
+3.  Redeploy Backend.
