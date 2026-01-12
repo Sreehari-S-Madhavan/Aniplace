@@ -13,12 +13,22 @@ const { Pool } = require('pg')
 
 // Create connection pool
 // Connection details come from environment variables
+// Connection details
+const connectionConfig = process.env.DATABASE_URL
+  ? {
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  }
+  : {
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 5432,
+    database: process.env.DB_NAME || 'anihub',
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD || '',
+  }
+
 const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'anihub',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || '',
+  ...connectionConfig,
   // Maximum number of clients in the pool
   max: 20,
   // How long a client is allowed to remain idle before being closed
