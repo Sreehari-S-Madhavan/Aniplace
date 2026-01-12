@@ -14,13 +14,20 @@ const path = require('path')
 const { Pool } = require('pg')
 
 async function seed() {
-    const pool = new Pool({
-        host: process.env.DB_HOST || 'localhost',
-        port: process.env.DB_PORT || 5432,
-        database: process.env.DB_NAME || 'anihub',
-        user: process.env.DB_USER || 'postgres',
-        password: process.env.DB_PASSWORD,
-    })
+    const connectionConfig = process.env.DATABASE_URL
+        ? {
+            connectionString: process.env.DATABASE_URL,
+            ssl: { rejectUnauthorized: false }
+        }
+        : {
+            host: process.env.DB_HOST || 'localhost',
+            port: process.env.DB_PORT || 5432,
+            database: process.env.DB_NAME || 'anihub',
+            user: process.env.DB_USER || 'postgres',
+            password: process.env.DB_PASSWORD,
+        }
+
+    const pool = new Pool(connectionConfig)
 
     try {
         console.log('🔌 Connecting to database...')
