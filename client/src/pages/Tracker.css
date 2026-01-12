@@ -1,0 +1,303 @@
+.tracker-page {
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+.tracker-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tracker-page h1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333;
+}
+
+.error-message {
+  color: #e94560;
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #ffeaea;
+  border-radius: 4px;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.tracker-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+  background: #f0f0f0;
+}
+
+.filter-btn.active {
+  background: #e94560;
+  color: white;
+  border-color: #e94560;
+}
+
+.tracker-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tracker-item {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tracker-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.tracker-item-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.tracker-anime-info {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.tracker-anime-link {
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.tracker-anime-image {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+
+.tracker-anime-link:hover .tracker-anime-image {
+  transform: scale(1.05);
+}
+
+.tracker-anime-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.tracker-anime-title {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tracker-anime-title:hover {
+  color: #e94560;
+}
+
+.tracker-anime-meta {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.tracker-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.status-section,
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.status-section label,
+.progress-section label {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.status-select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: white;
+}
+
+.status-select:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.progress-input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  width: 80px;
+}
+
+.progress-input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.progress-section {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progress-section span {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.status-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-watching {
+  background: #007bff;
+  color: white;
+}
+
+.status-completed {
+  background: #28a745;
+  color: white;
+}
+
+.status-on-hold {
+  background: #ffc107;
+  color: #333;
+}
+
+.status-dropped {
+  background: #dc3545;
+  color: white;
+}
+
+.status-plan-to-watch {
+  background: #6c757d;
+  color: white;
+}
+
+.status-default {
+  background: #6c757d;
+  color: white;
+}
+
+.empty-tracker {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.empty-tracker p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.browse-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #e94560;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.browse-link:hover {
+  background: #d43d53;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .tracker-page {
+    padding: 1rem;
+  }
+
+  .tracker-item-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tracker-controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: auto;
+  }
+
+  .progress-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .tracker-filters {
+    gap: 0.25rem;
+  }
+
+  .filter-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,312 @@
+.where-to-watch-page {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.where-to-watch-container h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Search Form */
+.search-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.search-button {
+  padding: 0 2rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-button:hover {
+  background-color: #2980b9;
+}
+
+.search-button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Search Results List */
+.search-results-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.search-results-list {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.search-result-item {
+  width: 100%;
+  text-align: left;
+  background: white;
+  border: 1px solid #eee;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.search-result-item:hover {
+  background: #f8f9fa;
+  transform: translateX(5px);
+  border-color: #3498db;
+}
+
+.search-result-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-result-thumb {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.search-result-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-result-sub {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.search-result-meta {
+  font-size: 0.8rem;
+  color: #95a5a6;
+  margin-top: 0.2rem;
+}
+
+/* Anime Header Card */
+.anime-header-card {
+  display: flex;
+  gap: 2rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.anime-poster-large {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.anime-details-large h2 {
+  margin-top: 0;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.anime-meta-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  background: #f1f2f6;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.tag.star {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.anime-synopsis {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Platforms Grid */
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.platform-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+}
+
+.platform-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #3498db;
+}
+
+.platform-icon {
+  width: 48px;
+  height: 48px;
+  background: #f1f2f6;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.platform-info {
+  flex: 1;
+}
+
+.platform-name {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.platform-status {
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+.platform-status.available {
+  color: #2ecc71;
+}
+
+.platform-status.upcoming {
+  color: #f1c40f;
+}
+
+.platform-status.expired {
+  color: #e74c3c;
+}
+
+.platform-region {
+  font-size: 0.75rem;
+  color: #95a5a6;
+}
+
+.platform-arrow {
+  color: #cbd5e0;
+}
+
+/* Fallback Search */
+.fallback-search {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.fallback-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.fallback-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.fallback-btn.google {
+  background: #4285f4;
+  color: white;
+}
+
+.fallback-btn.justwatch {
+  background: #f3ce13;
+  color: black;
+}
+
+.fallback-btn.crunchyroll {
+  background: #f47521;
+  color: white;
+}
+
+.fallback-btn:hover {
+  opacity: 0.9;
+}
+
+.error {
+  color: #e74c3c;
+  background: #fde8e7;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .anime-header-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .search-form {
+    flex-direction: column;
+  }
+
+  .anime-poster-large {
+    width: 150px;
+    height: 225px;
+  }
+}
