@@ -1,65 +1,45 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { searchAnime, getPopularAnime } from '../services/api'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Search, TrendingUp } from 'lucide-react'
+import { searchAnime, getGenreList } from '../services/api'
 import './Browse.css'
 
-/**
- * Browse Page Component
- * 
- * Page for browsing and searching anime.
- * 
- * Features:
- * - Search bar for anime
- * - Grid of anime cards
- * - Click to view details
- * - Shows popular anime by default
- */
 function Browse() {
   const [animeList, setAnimeList] = useState([])
-  const [searchQuery, setSearchQuery] = useState('')
+  const [genres, setGenres] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
 
-  // Load popular anime on component mount
   useEffect(() => {
-    loadPopularAnime()
+    loadInitialData()
   }, [])
 
-  /**
-   * Load popular anime from Jikan API
-   */
-  const loadPopularAnime = async () => {
+  const loadInitialData = async () => {
     try {
       setLoading(true)
-      setError('')
-      const anime = await getPopularAnime()
-      setAnimeList(anime)
+      const [animeRes, genreRes] = await Promise.all([
+        searchAnime(''),
+        getGenreList()
+      ])
+      setAnimeList(animeRes.data || [])
+      setGenres(genreRes.data || [])
     } catch (err) {
-      setError('Failed to load anime. Please try again.')
-      console.error('Error loading popular anime:', err)
+      setError('Neural data link failed. Frequency lost.')
     } finally {
       setLoading(false)
     }
   }
 
-  /**
-   * Handle search form submission
-   */
   const handleSearch = async (e) => {
     e.preventDefault()
-    if (!searchQuery.trim()) {
-      loadPopularAnime() // If empty search, show popular
-      return
-    }
-
     try {
       setLoading(true)
-      setError('')
-      const results = await searchAnime(searchQuery)
-      setAnimeList(results.data || [])
+      const response = await searchAnime(searchQuery)
+      setAnimeList(response.data || [])
     } catch (err) {
-      setError('Search failed. Please try again.')
-      console.error('Error searching anime:', err)
+      setError('Search protocol failed.')
     } finally {
       setLoading(false)
     }
@@ -67,66 +47,76 @@ function Browse() {
 
   return (
     <div className="browse-page">
-      <div className="browse-container">
-        <h1>Browse Anime</h1>
-        
-        {/* Search bar */}
-        <form className="search-section" onSubmit={handleSearch}>
-          <input 
-            type="text" 
-            placeholder="Search anime..." 
-            className="search-input"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button type="submit" className="search-btn">
-            Search
-          </button>
-        </form>
+      <div className="page-header holographic">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="brand-tag">GLOBAL_LIBRARY</div>
+            <h1>Neural Repository</h1>
+            <p className="status-readout">DATA_NODES: {animeList.length}+ // STATUS_CLEAR</p>
+          </motion.div>
 
-        {/* Error message */}
-        {error && (
-          <div className="error-message">
-            {error}
-          </div>
-        )}
+          <form onSubmit={handleSearch} className="search-box-premium">
+            <Search className="search-icon" size={20} />
+            <input
+              type="text"
+              placeholder="SCAN_FOR_LEGENDS..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="submit" className="btn btn-primary">SEARCH</button>
+          </form>
+        </div>
+      </div>
 
-        {/* Loading state */}
-        {loading && (
-          <div className="loading">
-            Loading anime...
-          </div>
-        )}
+      <div className="container" style={{ paddingBottom: '8rem' }}>
+        {error && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="error-message cyber-alert">{error}</motion.div>}
 
-        {/* Anime grid */}
-        {!loading && !error && (
-          <div className="anime-grid">
-            {animeList.length === 0 ? (
-              <p>No anime found.</p>
-            ) : (
-              animeList.map((anime) => (
-                <Link 
-                  key={anime.mal_id} 
-                  to={`/anime/${anime.mal_id}`} 
-                  className="anime-card"
+        {loading ? (
+          <div className="discovery-loader">SCANNING_THE_COSMOS...</div>
+        ) : (
+          <motion.div
+            layout
+            className="anime-grid"
+          >
+            <AnimatePresence mode="popLayout">
+              {animeList.map((anime, i) => (
+                <motion.div
+                  layout
+                  key={anime.mal_id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: i * 0.02, type: 'spring', stiffness: 200, damping: 20 }}
+                  className="anime-card holo-panel"
                 >
-                  <div className="anime-image-container">
-                    <img 
-                      src={anime.images?.jpg?.image_url || '/placeholder.jpg'} 
-                      alt={anime.title}
-                      className="anime-image"
-                    />
-                  </div>
-                  <div className="anime-info">
-                    <h3 className="anime-title">{anime.title}</h3>
-                    <p className="anime-score">
-                      ⭐ {anime.score || 'N/A'}
-                    </p>
-                    <p className="anime-type">{anime.type}</p>
-                  </div>
-                </Link>
-              ))
-            )}
+                  <Link to={`/anime/${anime.mal_id}`} style={{ textDecoration: 'none' }}>
+                    <div className="holo-card-img">
+                      <img src={anime.images.jpg.image_url} alt={anime.title} />
+                      <div className="holo-scan"></div>
+                      <div className="score-tag">
+                        <TrendingUp size={10} /> {anime.score || '??'}
+                      </div>
+                    </div>
+                    <div className="holo-card-content">
+                      <h3 className="anime-title-holo">{anime.title}</h3>
+                      <div className="anime-meta">
+                        <span>{anime.type}</span>
+                        <span>{anime.episodes ? `${anime.episodes} EPS` : 'ONGOING'}</span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
+
+        {!loading && animeList.length === 0 && (
+          <div className="empty-state">
+            <p className="status-readout">NO_NEURAL_MATCH_FOUND_FOR: {searchQuery.toUpperCase()}</p>
           </div>
         )}
       </div>

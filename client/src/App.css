@@ -8,7 +8,7 @@
 
 .main-content {
   flex: 1;
-  background-color: #f8f9fa;
+  background-color: var(--background);
 }
 
 /* Global button styles */

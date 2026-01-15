@@ -58,8 +58,13 @@ export function saveUser(user) {
  * @returns {object|null} - User object or null
  */
 export function getUser() {
-  const userStr = localStorage.getItem('user')
-  return userStr ? JSON.parse(userStr) : null
+  try {
+    const userStr = localStorage.getItem('user')
+    return userStr ? JSON.parse(userStr) : null
+  } catch (error) {
+    console.error('Error parsing user from localStorage:', error)
+    return null
+  }
 }
 
 /**

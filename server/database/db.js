@@ -20,12 +20,19 @@ const connectionConfig = process.env.DATABASE_URL
     ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
   }
   : {
-    host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 5432,
-    database: process.env.DB_NAME || 'anihub',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || '',
+    host: String(process.env.DB_HOST || 'localhost'),
+    port: Number(process.env.DB_PORT || 5432),
+    database: String(process.env.DB_NAME || 'anihub'),
+    user: String(process.env.DB_USER || 'postgres'),
+    password: String(process.env.DB_PASSWORD || ''),
   }
+
+console.log('🔌 Attempting DB connection with:', {
+  host: connectionConfig.host || 'via URL',
+  database: connectionConfig.database,
+  user: connectionConfig.user,
+  port: connectionConfig.port
+})
 
 const pool = new Pool({
   ...connectionConfig,
@@ -34,7 +41,7 @@ const pool = new Pool({
   // How long a client is allowed to remain idle before being closed
   idleTimeoutMillis: 30000,
   // How long to wait before timing out when connecting a new client
-  connectionTimeoutMillis: 2000,
+  connectionTimeoutMillis: 10000,
 })
 
 // Test connection

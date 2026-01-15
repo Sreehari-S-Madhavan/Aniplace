@@ -12,21 +12,22 @@ async function testConnection() {
   try {
     console.log('Testing database connection...')
     console.log('Host:', process.env.DB_HOST || 'localhost')
+    console.log('Port:', process.env.DB_PORT || 5432)
     console.log('Database:', process.env.DB_NAME || 'anihub')
-    
+
     const result = await pool.query('SELECT NOW() as current_time, version() as version')
-    
+
     console.log('\n✅ Database connected successfully!')
     console.log('Current time:', result.rows[0].current_time)
     console.log('PostgreSQL version:', result.rows[0].version.split('\n')[0])
-    
+
     // Test if tables exist
     const tablesResult = await pool.query(`
       SELECT table_name 
       FROM information_schema.tables 
       WHERE table_schema = 'public'
     `)
-    
+
     if (tablesResult.rows.length > 0) {
       console.log('\n📊 Tables found:')
       tablesResult.rows.forEach(row => {
@@ -35,7 +36,7 @@ async function testConnection() {
     } else {
       console.log('\n⚠️  No tables found. Run schema.sql to create tables.')
     }
-    
+
     await pool.end()
     process.exit(0)
   } catch (error) {

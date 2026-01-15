@@ -156,6 +156,22 @@ export async function getAnimeDetails(animeId) {
   }
 }
 
+/**
+ * Get genre list for anime
+ * 
+ * @returns {Promise} - Array of genres
+ */
+export async function getGenreList() {
+  try {
+    const response = await fetch('https://api.jikan.moe/v4/genres/anime')
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Jikan API Error:', error)
+    throw error
+  }
+}
+
 // ============================================
 // TRACKER API FUNCTIONS
 // ============================================

@@ -1,43 +1,35 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Compass, Home as HomeIcon, Layout, MessageSquare, Tv, User, LogOut, Shield } from 'lucide-react'
 import { isAuthenticated, getUser, logout } from '../services/auth'
 import './Navbar.css'
 
-/**
- * Navbar Component
- * 
- * Navigation bar that appears on every page.
- * Shows links to all main sections of the app.
- * 
- * Features:
- * - Highlights current page
- * - Responsive design (mobile + desktop)
- * - Shows login/register buttons when not logged in
- * - Shows user menu when logged in
- */
 function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  // Check authentication status on mount and when location changes
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   useEffect(() => {
     const checkAuth = () => {
       setIsLoggedIn(isAuthenticated())
       setUser(getUser())
     }
     checkAuth()
-    
-    // Listen for storage changes (when user logs in/out in another tab)
     window.addEventListener('storage', checkAuth)
     return () => window.removeEventListener('storage', checkAuth)
   }, [location])
 
-  // Check if a link is active (current page)
   const isActive = (path) => location.pathname === path
 
-  // Handle logout
   const handleLogout = () => {
     logout()
     setIsLoggedIn(false)
@@ -45,80 +37,76 @@ function Navbar() {
     navigate('/')
   }
 
+  const navLinks = [
+    { path: '/', label: 'HOME', icon: <HomeIcon size={18} /> },
+    { path: '/browse', label: 'EXPLORE', icon: <Compass size={18} /> },
+    { path: '/tracker', label: 'SANCTUARY', icon: <Layout size={18} /> },
+    { path: '/discussions', label: 'NEURAL_LINK', icon: <MessageSquare size={18} /> },
+    { path: '/where-to-watch', label: 'NODE_MAP', icon: <Tv size={18} /> },
+  ]
+
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        {/* Logo/Brand */}
+    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <div className="navbar-container container">
         <Link to="/" className="navbar-brand">
-          <h1>AniHub</h1>
+          <Shield className="brand-icon" />
+          <span className="brand-text">ANIPLACE</span>
         </Link>
 
-        {/* Navigation Links */}
         <ul className="navbar-links">
-          <li>
-            <Link 
-              to="/" 
-              className={isActive('/') ? 'active' : ''}
-            >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link 
-              to="/browse" 
-              className={isActive('/browse') ? 'active' : ''}
-            >
-              Browse
-            </Link>
-          </li>
-          <li>
-            <Link 
-              to="/tracker" 
-              className={isActive('/tracker') ? 'active' : ''}
-            >
-              Tracker
-            </Link>
-          </li>
-          <li>
-            <Link 
-              to="/discussions" 
-              className={isActive('/discussions') ? 'active' : ''}
-            >
-              Discussions
-            </Link>
-          </li>
-          <li>
-            <Link 
-              to="/where-to-watch" 
-              className={isActive('/where-to-watch') ? 'active' : ''}
-            >
-              Where to Watch
-            </Link>
-          </li>
-          <li>
-            <Link 
-              to="/profile" 
-              className={isActive('/profile') ? 'active' : ''}
-            >
-              Profile
-            </Link>
-          </li>
+          {navLinks.map((link) => (
+            <li key={link.path}>
+              <Link
+                to={link.path}
+                className={`nav-item ${isActive(link.path) ? 'active' : ''}`}
+              >
+                <span className="nav-icon">{link.icon}</span>
+                <span className="nav-label">{link.label}</span>
+                {isActive(link.path) && (
+                  <motion.div
+                    layoutId="nav-glow"
+                    className="nav-item-glow"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </Link>
+            </li>
+          ))}
         </ul>
 
-        {/* Auth Buttons or User Menu */}
         <div className="navbar-auth">
-          {isLoggedIn && user ? (
-            <div className="user-menu">
-              <span className="username">Hello, {user.username}</span>
-              <Link to="/profile" className="btn-profile">Profile</Link>
-              <button onClick={handleLogout} className="btn-logout">Logout</button>
-            </div>
-          ) : (
-            <>
-              <Link to="/login" className="btn-login">Login</Link>
-              <Link to="/register" className="btn-register">Register</Link>
-            </>
-          )}
+          <AnimatePresence mode="wait">
+            {isLoggedIn && user ? (
+              <motion.div
+                key="user"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="user-menu-premium"
+              >
+                <div className="user-info">
+                  <div className="avatar">
+                    {user.username?.charAt(0).toUpperCase() || '?'}
+                  </div>
+                  <span className="username">ID_{user.username?.toUpperCase() || 'ANON'}</span>
+                </div>
+                <button onClick={handleLogout} className="btn-icon">
+                  <LogOut size={20} />
+                </button>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="auth"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="auth-actions"
+              >
+                <Link to="/login" className="btn-login-premium">LOGIN</Link>
+                <Link to="/register" className="btn btn-primary btn-sm">JOIN</Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </nav>

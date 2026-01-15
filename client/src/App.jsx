@@ -12,25 +12,6 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import './App.css'
 
-/**
- * Main App Component
- * 
- * This is the root component that sets up routing for the entire application.
- * 
- * How it works:
- * - BrowserRouter wraps everything to enable routing
- * - Routes defines all possible URL paths
- * - Route maps each path to a component (page)
- * - Navbar shows on every page
- * 
- * Routes:
- * - / → Home page (landing page)
- * - /browse → Browse anime/manga
- * - /tracker → User's personal tracker (requires login)
- * - /discussions → Community discussions
- * - /where-to-watch → Legal platforms
- * - /profile → User profile (requires login)
- */
 function App() {
   return (
     <Router>
@@ -45,21 +26,21 @@ function App() {
             <Route path="/where-to-watch" element={<WhereToWatch />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route 
-              path="/tracker" 
+            <Route
+              path="/tracker"
               element={
                 <ProtectedRoute>
                   <Tracker />
                 </ProtectedRoute>
-              } 
+              }
             />
-            <Route 
-              path="/profile" 
+            <Route
+              path="/profile"
               element={
                 <ProtectedRoute>
                   <Profile />
                 </ProtectedRoute>
-              } 
+              }
             />
           </Routes>
         </main>
