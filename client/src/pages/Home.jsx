@@ -38,7 +38,7 @@ function Home() {
             className="hero-content"
           >
             <div className="brand-tag">ANIPLACE EXCLUSIVE</div>
-            <div className="system-status">SYSTEM_ACTIVE: PORT_5180</div>
+
             <h1 className="glitch-text">Where Legends <br />Are Watched</h1>
             <p>Step into the ultimate digital sanctuary for anime enthusiasts. Track, discover, and immerse yourself in stories that redefine reality.</p>
             <div className="hero-buttons">

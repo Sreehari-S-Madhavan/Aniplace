@@ -15,10 +15,7 @@
  */
 
 // Base URL for API (will be different in production)
-// Base URL for API
-const envUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-// Ensure we don't end up with double /api if env var has it
-const API_BASE_URL = envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
 
 /**
  * Helper function to make API requests
@@ -30,32 +27,32 @@ const API_BASE_URL = envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`
 async function apiRequest(endpoint, options = {}) {
   // Get token from localStorage if user is logged in
   const token = localStorage.getItem('token')
-
+  
   // Default headers
   const headers = {
     'Content-Type': 'application/json',
     ...options.headers,
   }
-
+  
   // Add authorization header if token exists
   if (token) {
     headers.Authorization = `Bearer ${token}`
   }
-
+  
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       headers,
     })
-
+    
     // Parse JSON response
     const data = await response.json()
-
+    
     // If response is not ok, throw error
     if (!response.ok) {
       throw new Error(data.message || 'Something went wrong')
     }
-
+    
     return data
   } catch (error) {
     console.error('API Error:', error)
@@ -91,15 +88,6 @@ export async function login(credentials) {
     method: 'POST',
     body: JSON.stringify(credentials),
   })
-}
-
-/**
- * Get user profile and stats
- * 
- * @returns {Promise} - User profile data
- */
-export async function getUserProfile() {
-  return apiRequest('/auth/me')
 }
 
 // ============================================
@@ -150,22 +138,6 @@ export async function getAnimeDetails(animeId) {
     const response = await fetch(`https://api.jikan.moe/v4/anime/${animeId}`)
     const data = await response.json()
     return data.data
-  } catch (error) {
-    console.error('Jikan API Error:', error)
-    throw error
-  }
-}
-
-/**
- * Get genre list for anime
- * 
- * @returns {Promise} - Array of genres
- */
-export async function getGenreList() {
-  try {
-    const response = await fetch('https://api.jikan.moe/v4/genres/anime')
-    const data = await response.json()
-    return data
   } catch (error) {
     console.error('Jikan API Error:', error)
     throw error

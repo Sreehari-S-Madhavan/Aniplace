@@ -38,11 +38,11 @@ function Navbar() {
   }
 
   const navLinks = [
-    { path: '/', label: 'HOME', icon: <HomeIcon size={18} /> },
-    { path: '/browse', label: 'EXPLORE', icon: <Compass size={18} /> },
-    { path: '/tracker', label: 'SANCTUARY', icon: <Layout size={18} /> },
-    { path: '/discussions', label: 'NEURAL_LINK', icon: <MessageSquare size={18} /> },
-    { path: '/where-to-watch', label: 'NODE_MAP', icon: <Tv size={18} /> },
+    { path: '/', label: 'Home', icon: <HomeIcon size={18} /> },
+    { path: '/browse', label: 'Browse', icon: <Compass size={18} /> },
+    { path: '/tracker', label: 'Tracker', icon: <Layout size={18} /> },
+    { path: '/discussions', label: 'Discussions', icon: <MessageSquare size={18} /> },
+    { path: '/where-to-watch', label: 'Where to Watch', icon: <Tv size={18} /> },
   ]
 
   return (
@@ -84,12 +84,12 @@ function Navbar() {
                 exit={{ opacity: 0, x: 20 }}
                 className="user-menu-premium"
               >
-                <div className="user-info">
+                <Link to="/profile" className="user-info">
                   <div className="avatar">
                     {user.username?.charAt(0).toUpperCase() || '?'}
                   </div>
                   <span className="username">ID_{user.username?.toUpperCase() || 'ANON'}</span>
-                </div>
+                </Link>
                 <button onClick={handleLogout} className="btn-icon">
                   <LogOut size={20} />
                 </button>
